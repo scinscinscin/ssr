@@ -1,19 +1,23 @@
 import { GenerateLayout } from "@scinorandex/layout";
+import { serialize, deserialize } from "superjson";
 
 export const PublicLayout = GenerateLayout<{
-  InternalProps: { date: string };
+  InternalProps: { date: Date };
   LayoutProps: {};
   ExportedInternalProps: {};
 }>({
+  serialize: (original) => serialize(original),
+  deserialize: (original) => deserialize(original),
+
   async generateInternalProps() {
-    return { date: new Date().toString() };
+    return { date: new Date() };
   },
 
   layoutComponent({ internalProps, layoutProps }) {
     return (
       <div>
         <header>
-          <h1>{internalProps.date}</h1>
+          <h1>{internalProps.date.toString()}</h1>
         </header>
 
         <main>{layoutProps.children}</main>

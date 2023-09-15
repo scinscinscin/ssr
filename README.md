@@ -1,6 +1,6 @@
 # SSR Template
 
-A template for creating projects using `@scinorandex/rpscin` and Next.js + `@scinorandex/layouts`
+A template for creating projects using `@scinorandex/rpscin` and Next.js + `@scinorandex/layout`
 
 # To run
 1. Clone this repository

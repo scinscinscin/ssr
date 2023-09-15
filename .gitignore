@@ -34,3 +34,6 @@ yarn-error.log*
 *.tsbuildinfo
 
 yarn.lock
+prisma/migrations/**
+prisma/database*
+prisma/*.sqlite
