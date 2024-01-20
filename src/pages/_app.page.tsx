@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.scss";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";

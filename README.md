@@ -4,6 +4,6 @@ A template for creating projects using `@scinorandex/rpscin` and Next.js + `@sci
 
 # To run
 1. Clone this repository
-2. Install the packages
-3. Run `yarn dev`
+2. Install the packages with `yarn`
+3. Run `yarn dev`, or `yarn windev` if you're getting `ts-node` errors
 
