@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { unTypeSafeRouter } from "./routers/index.js";
 import { Server } from "@scinorandex/rpscin";
+import { createServer } from "http";
 
 const nextApp = next({ dev: process.env.NODE_ENV === "development" });
 const handle = nextApp.getRequestHandler();
@@ -41,6 +42,18 @@ const main = async () => {
   server.use((req, res) => nextApp.render404(req, res));
   server.use("*", (err: Error, req: Request, res: Response) => {
     nextApp.renderError(err, req, res, req.path, {});
+  });
+
+  const httpServer = createServer();
+  httpServer.on("upgrade", (req, socket, head) => {
+    if (req.url != null && req.url.startsWith("/api")) {
+      req.url = req.url.replace("/api", "");
+      return erpcServer.createWebSocketHandler()(req, socket, head);
+    } else socket.destroy();
+  });
+
+  httpServer.listen(8001, () => {
+    console.log("Started on ws://localhost:8001");
   });
 
   server.listen(8000, () => {
