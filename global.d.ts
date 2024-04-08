@@ -7,13 +7,18 @@ import type {
 // Changes the type of GetServerSidePropsContext to be of Express Request and Response
 // https://github.com/vercel/next.js/discussions/36271
 
+/**
+ * Sets the type of res.locals, which can be accessed using ctx.res.locals
+ */
+interface MyLocals {}
+
 declare module "next" {
   export type GetServerSidePropsContext<
     Q extends ParsedUrlQuery = ParsedUrlQuery,
     D extends PreviewData = PreviewData
   > = OriginalGetServerSidePropsContext<Q, D> & {
     req: Request;
-    res: Response<any, {}>;
+    res: Response<any, MyLocals>;
   };
 
   export type GetServerSideProps<

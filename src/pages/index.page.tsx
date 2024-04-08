@@ -12,11 +12,15 @@ const Page = PublicLayout.createPage<{}>({
        * Create a websocket connection to /status and listen to `newLogin` events,
        * adding new username to `names` and print the contents
        */
-      client["/status"].ws({ path: {} }).then((conn) => {
+      const subscription = client["/status"].ws({ path: {} });
+
+      subscription.then((conn) => {
         conn.on("newLogin", async ({ username }) => {
-          setNames([...names, username]);
+          setNames((a) => [...a, username]);
         });
       });
+
+      return () => subscription.close();
     }, []);
 
     const Form = useForm<{ username: string }>();

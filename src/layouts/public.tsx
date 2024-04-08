@@ -2,14 +2,14 @@ import { GenerateLayout, GenerateLayoutOptionsImpl } from "@scinorandex/layout";
 import { NextSeo, NextSeoProps } from "next-seo";
 import { db } from "../utils/prisma";
 
-interface GenerateLayoutOptions extends GenerateLayoutOptionsImpl {
+interface PublicLayoutOptions extends GenerateLayoutOptionsImpl {
   // the page can return NextSeoProps to define the SEO meta tags of the page
   ClientSideLayoutProps: { seo?: NextSeoProps };
   // the layout needs the list of users from the DB
   ServerSideLayoutProps: { users: string[] };
 }
 
-export const PublicLayout = GenerateLayout<GenerateLayoutOptions>({
+export const PublicLayout = GenerateLayout<PublicLayoutOptions>({
   /**
    * Create a layout that prints the usernames of accounts in the DB
    */

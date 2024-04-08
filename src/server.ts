@@ -44,20 +44,16 @@ const main = async () => {
     nextApp.renderError(err, req, res, req.path, {});
   });
 
-  const httpServer = createServer();
+  const httpServer = createServer(server);
   httpServer.on("upgrade", (req, socket, head) => {
     if (req.url != null && req.url.startsWith("/api")) {
       req.url = req.url.replace("/api", "");
       return erpcServer.createWebSocketHandler()(req, socket, head);
-    } else socket.destroy();
+    } else if (req.url != "/_next/webpack-hmr") socket.destroy();
   });
 
-  httpServer.listen(8001, () => {
-    console.log("Started on ws://localhost:8001");
-  });
-
-  server.listen(8000, () => {
-    console.log("Started on http://localhost:8000");
+  httpServer.listen(8000, () => {
+    console.log("Started on http://localhost:8000 and ws://localhost:8000");
   });
 };
 
