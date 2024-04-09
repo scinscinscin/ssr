@@ -37,7 +37,7 @@ export const unTypeSafeRouter = getRootRouter({
     }),
   },
 
-  "/login": {
+  "/broadcast": {
     /**
      * Send a message to every websocket connected to /api/status
      */

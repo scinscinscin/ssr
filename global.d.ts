@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import type { Request, Response } from "express";
 import type {
   GetServerSidePropsContext as OriginalGetServerSidePropsContext,
@@ -10,7 +11,9 @@ import type {
 /**
  * Sets the type of res.locals, which can be accessed using ctx.res.locals
  */
-interface MyLocals {}
+interface MyLocals {
+  user: User | null;
+}
 
 declare module "next" {
   export type GetServerSidePropsContext<

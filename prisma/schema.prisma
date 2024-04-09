@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  uuid     String @id @unique
+  uuid     String @id @unique @default(uuid())
   username String @unique
   hash     String
   salt     String

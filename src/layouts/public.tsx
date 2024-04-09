@@ -1,17 +1,16 @@
 import { GenerateLayout, GenerateLayoutOptionsImpl } from "@scinorandex/layout";
 import { NextSeo, NextSeoProps } from "next-seo";
-import { db } from "../utils/prisma";
 
 interface PublicLayoutOptions extends GenerateLayoutOptionsImpl {
   // the page can return NextSeoProps to define the SEO meta tags of the page
   ClientSideLayoutProps: { seo?: NextSeoProps };
-  // the layout needs the list of users from the DB
-  ServerSideLayoutProps: { users: string[] };
+  // the layout needs the username of the currently logged in user
+  ServerSideLayoutProps: { username: string | null };
 }
 
 export const PublicLayout = GenerateLayout<PublicLayoutOptions>({
   /**
-   * Create a layout that prints the usernames of accounts in the DB
+   * Create a layout that prints the currently logged in user
    */
   layoutComponent({ internalProps, layoutProps }) {
     return (
@@ -27,7 +26,7 @@ export const PublicLayout = GenerateLayout<PublicLayoutOptions>({
         <div>
           <header>
             <h2>@scinorandex/ssr template</h2>
-            <h3>Users in DB: {internalProps.users.join(", ")}</h3>
+            {internalProps.username && <h3>Logged in as: {internalProps.username}</h3>}
           </header>
 
           <main>{layoutProps.children}</main>
@@ -40,10 +39,10 @@ export const PublicLayout = GenerateLayout<PublicLayoutOptions>({
    * Fetch the created users from the database and return to the layout component
    */
   async getServerSideProps(ctx) {
-    const users = await db.user.findMany();
+    const username = ctx.res.locals.user?.username ?? null;
 
     return {
-      props: { layout: { users: users.map((u) => u.username) } },
+      props: { layout: { username } },
     };
   },
 });

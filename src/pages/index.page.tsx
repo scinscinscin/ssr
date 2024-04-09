@@ -15,6 +15,7 @@ const Page = PublicLayout.createPage<{}>({
       const subscription = client["/status"].ws({ path: {} });
 
       subscription.then((conn) => {
+        console.log("Connected to websocket server");
         conn.on("newLogin", async ({ username }) => {
           setNames((a) => [...a, username]);
         });
@@ -44,7 +45,7 @@ const Page = PublicLayout.createPage<{}>({
               /**
                * Send a post request to /api/login to broadcast username to all connected clients
                */
-              client["/login"].post({ body: { username } }).then(() => Form.reset({ username: "" }));
+              client["/broadcast"].post({ body: { username } }).then(() => Form.reset({ username: "" }));
             })}
           >
             <label style={{ marginTop: "20px", display: "block", fontWeight: "bold" }}>
