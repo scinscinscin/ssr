@@ -1,11 +1,13 @@
 import { CookieOptions, Request, Response } from "express";
+import { IncomingMessage } from "http";
 import jsonwebtoken from "jsonwebtoken";
+import cookie from "cookie";
 
 const isProd = process.env.NODE_ENV === "production";
 
 interface Serializer<JWTData extends object, UserObject> {
   signIn: (req: Request, res: Response, data: JWTData, cookieOptions?: CookieOptions) => void;
-  authenticate: (req: Request, res: Response) => Promise<UserObject>;
+  authenticate: (req: IncomingMessage) => Promise<UserObject>;
 }
 
 interface CreateJWTVerifierOptions<JWTData extends object, UserObject> {
@@ -45,8 +47,12 @@ export const generateJWTAuth = <JWTData extends object, UserObject>(
       res.cookie(opts.cookieName, jwt, cookieOptions);
     },
 
-    authenticate: async (req: Request, res: Response): Promise<UserObject> => {
-      const jwt = jsonwebtoken.verify(req.cookies[opts.cookieName], opts.jwtKey) as JWTData;
+    authenticate: async (req: IncomingMessage): Promise<UserObject> => {
+      const cookieHeader = req.headers.cookie;
+      if (!cookieHeader) throw new Error("No cookie header set");
+      const cookies = cookie.parse(cookieHeader);
+
+      const jwt = jsonwebtoken.verify(cookies[opts.cookieName], opts.jwtKey) as JWTData;
       return await opts.getUserFromPayload(jwt);
     },
   };

@@ -1,6 +1,7 @@
-import { Connection, baseProcedure, wsValidate } from "@scinorandex/erpc";
+import { Connection, wsValidate } from "@scinorandex/erpc";
 import { createWebSocketEndpoint, getRootRouter } from "@scinorandex/rpscin";
 import { z } from "zod";
+import { baseProcedure } from "../utils/auth.js";
 
 type Endpoint = {
   Receives: {};

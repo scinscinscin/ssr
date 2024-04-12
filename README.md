@@ -8,8 +8,8 @@ A template for creating projects using scinstack
  - Has Font Awesome configured using [`react-fortawesome`](https://fortawesome.com/)
  - Comes with [`react-toastify`](https://www.npmjs.com/package/react-toastify), [`next-seo`](https://www.npmjs.com/package/next-seo), [`react-hook-form`](https://www.npmjs.com/package/react-hook-form) preinstalled
  - Uses SCSS modules using [`sass`](https://www.npmjs.com/package/sass)
+ - JWT and Session Authentication, login and registration routes already setup for username & password, and support for Google OAuth using passport
  - Uses Prisma as the database ORM
- - JWT Authentication, login and registration routes already setup
 
 ### To run
 1. Clone this repository
