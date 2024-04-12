@@ -44,9 +44,10 @@ const main = async () => {
   server.use(cookieParser());
 
   if (ENABLE_GOOGLE_AUTH) {
+    console.log("Enabling Google Auth");
     const { passport, authenticate } = generateGoogleAuth<{ user_uuid: string }, User>({
-      clientId: ServerConstants.GOOGLE_OAUTH2_ID!,
-      clientSecret: ServerConstants.GOOGLE_OAUTH2_ID!,
+      clientID: ServerConstants.GOOGLE_OAUTH2_ID!,
+      clientSecret: ServerConstants.GOOGLE_OAUTH2_SECRET!,
       domain: ClientConstants.DOMAIN,
 
       async getSessionDataFromEmail(gmail) {
@@ -77,7 +78,7 @@ const main = async () => {
   }
 
   server.use(async (req, res, next) => {
-    if (res.locals.user != undefined) {
+    if (res.locals.user == undefined) {
       const user = await JwtAuth.authenticate(req).catch(() => null);
       res.locals.user = user;
     }

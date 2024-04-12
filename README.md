@@ -15,4 +15,13 @@ A template for creating projects using scinstack
 1. Clone this repository
 2. Install the packages with `yarn`
 3. Run `yarn migrate` to initialize the database
-4. Run `yarn dev`, or `yarn windev` if you're getting `ts-node` errors
+4. Copy `.env.example` to `.env` and fill any necessary fields
+5. Run `yarn dev`, or `yarn windev` if you're getting `ts-node` errors
+
+### TODO
+1. Add Redis support for production
+2. Improve docker support
+3. Modify schema.prisma to support postgres instead of just SQLite
+4. Setup nodemailer for registration verification
+5. Setup ReCaptcha
+6. Setup GitHub actions that compiles and lints the application

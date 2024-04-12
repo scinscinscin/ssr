@@ -7,7 +7,7 @@ interface GoogleAuthOpts<SessionData, User> {
   /**
    * The Google OAuth Client ID
    */
-  clientId: string;
+  clientID: string;
 
   /**
    * The Google OAuth Client Secret
@@ -40,7 +40,7 @@ export const generateGoogleAuth = <SessionData, User>(opts: GoogleAuthOpts<Sessi
   const googleAuth = passport.use(
     new GoogleStrategy(
       {
-        clientId: opts.clientId,
+        clientID: opts.clientID,
         clientSecret: opts.clientSecret,
         callbackURL: `${opts.domain ?? ""}/oauth2/redirect/google`,
         scope: ["profile", "email"],

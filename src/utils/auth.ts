@@ -6,6 +6,7 @@ import { db } from "./prisma.js";
 import { ERPCError, baseProcedure as _baseProcedure } from "@scinorandex/erpc";
 import { Request, Response } from "express";
 import { ServerConstants } from "./ServerConstants.js";
+import cryptoRandomString from "crypto-random-string";
 
 export const hashPassword = generateHashingFunction({});
 export const createSalt = generateSaltFunction();
@@ -31,16 +32,14 @@ export const baseProcedure = _baseProcedure.extend(async (req, res) => {
   return { user };
 });
 
-export const generateRandom = generateHashingFunction({ keylen: 64 });
-
 /**
  * Attach a new CSRF token to a response object
  * @param req Express request object
  * @param res Express response object
  * @param next A callback so this function can be used as express middleware
  */
-export const setCSRFToken = (req: Request, res: Response, next?: () => void) => {
-  res.cookie("csrfToken", generateRandom, {
+export const setCSRFToken = async (req: Request, res: Response, next?: () => void) => {
+  res.cookie("csrfToken", cryptoRandomString({ length: 36 }), {
     httpOnly: false,
     secure: process.env.NODE_ENV === "production",
     maxAge: 1000 * 60 * 60 * 24 * 7,
