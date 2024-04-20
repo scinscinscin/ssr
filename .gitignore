@@ -37,3 +37,4 @@ yarn.lock
 prisma/migrations/**
 prisma/database*
 prisma/*.sqlite
+.env

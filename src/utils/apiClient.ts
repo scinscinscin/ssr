@@ -8,6 +8,6 @@ export const client = Client<AppRouter, WebSocket>({
   serializer: Browser.serializer,
   apiLink: "/api",
   generateHeaders: () => ({
-    // "x-csrf-token": Cookies.get("csrfToken") ?? "",
+    "x-csrf-token": Cookies.get("csrfToken") ?? "",
   }),
 });

@@ -1,8 +1,8 @@
-import { ERPCError, baseProcedure } from "@scinorandex/erpc";
+import { ERPCError } from "@scinorandex/erpc";
 import { z } from "zod";
 import { unTypeSafeRouter } from "./index.js";
 import { db } from "../utils/prisma.js";
-import { JwtAuth, createSalt, hashPassword } from "../utils/auth.js";
+import { JwtAuth, baseProcedure, createSalt, hashPassword, setCSRFToken } from "../utils/auth.js";
 
 export const userRouter = unTypeSafeRouter.sub("/user", {
   "/login": {
@@ -17,6 +17,7 @@ export const userRouter = unTypeSafeRouter.sub("/user", {
           if (hashedPassword !== user.hash) throw new Error("Incorrect credentials");
 
           JwtAuth.signIn(req, res, { uuid: user.uuid });
+          setCSRFToken(req, res);
           return { success: true };
         } catch (err) {
           console.error("falled to login because: ", err);
