@@ -103,6 +103,9 @@ const main = async () => {
   httpServer.listen(8000, () => {
     console.log("Started on http://localhost:8000 and ws://localhost:8000");
   });
+
+  process.on("SIGTERM", () => (nextApp.close(), httpServer.close()));
+  process.on("SIGKILL", () => process.exit());
 };
 
 main().catch((err) => console.log("unexpected error occured", err));

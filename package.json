@@ -4,8 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development ts-node --esm ./src/server.ts",
-    "windev": "NODE_ENV=development node --loader ts-node/esm ./src/server.ts",
+    "dev": "NODE_ENV=development tsx watch --clear-screen=false ./src/server.ts",
     "build": "tsc && next build && echo Build successful",
     "tc": "tsc --noEmit",
     "start": "NODE_ENV=production node ./build/server.js",
@@ -58,6 +57,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/passport": "^1.0.16",
     "@types/pbkdf2": "^3.1.2",
-    "@types/ws": "^8.5.10"
+    "@types/ws": "^8.5.10",
+    "tsx": "^4.9.3"
   }
 }
