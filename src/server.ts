@@ -1,3 +1,4 @@
+import "dotenv/config.js";
 import next from "next";
 import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
