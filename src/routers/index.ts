@@ -1,7 +1,11 @@
-import { Connection, wsValidate } from "@scinorandex/erpc";
+import { Connection, ERPCError, wsValidate } from "@scinorandex/erpc";
 import { createWebSocketEndpoint, getRootRouter } from "@scinorandex/rpscin";
 import { z } from "zod";
 import { baseProcedure } from "../utils/auth.js";
+import { buildSchema, graphql } from "graphql";
+import { rootValue, schema } from "./graphql.js";
+
+const builtSchema = buildSchema(schema);
 
 type Endpoint = {
   Receives: {};
@@ -45,6 +49,22 @@ export const unTypeSafeRouter = getRootRouter({
     post: baseProcedure.input(z.object({ username: z.string() })).use(async (req, res, { input }) => {
       connections.forEach((conn) => conn.emit("newLogin", { username: input.username }));
       return {};
+    }),
+  },
+
+  "/graphql": {
+    post: baseProcedure.use(async (req, res) => {
+      const result = await graphql({
+        schema: builtSchema,
+        rootValue,
+        source: req.body.query,
+        variableValues: req.body.variables,
+      });
+
+      if (result.data) return result.data as any;
+
+      console.log("graphql errors: ", result.errors);
+      throw new ERPCError({ code: "SERVER_ERROR", message: "Bad GraphQL request" });
     }),
   },
 });
