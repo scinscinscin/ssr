@@ -1,14 +1,14 @@
-import { GenerateLayout, GenerateLayoutOptionsImpl } from "@scinorandex/layout";
+import { implementLayoutFrontend, GenerateLayoutOptionsImpl } from "@scinorandex/layout";
 import { NextSeo, NextSeoProps } from "next-seo";
 
-interface PublicLayoutOptions extends GenerateLayoutOptionsImpl {
+export interface PublicLayoutOptions extends GenerateLayoutOptionsImpl {
   // the page can return NextSeoProps to define the SEO meta tags of the page
   ClientSideLayoutProps: { seo?: NextSeoProps };
   // the layout needs the username of the currently logged in user
   ServerSideLayoutProps: { username: string | null };
 }
 
-export const PublicLayout = GenerateLayout<PublicLayoutOptions>({
+export const PublicLayoutFrontend = implementLayoutFrontend<PublicLayoutOptions>({
   /**
    * Create a layout that prints the currently logged in user
    */
@@ -33,16 +33,5 @@ export const PublicLayout = GenerateLayout<PublicLayoutOptions>({
         </div>
       </>
     );
-  },
-
-  /**
-   * Fetch the created users from the database and return to the layout component
-   */
-  async getServerSideProps(ctx) {
-    const username = ctx.res.locals.user?.username ?? null;
-
-    return {
-      props: { layout: { username } },
-    };
   },
 });

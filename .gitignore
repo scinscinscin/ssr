@@ -38,3 +38,7 @@ prisma/migrations/**
 prisma/database*
 prisma/*.sqlite
 .env
+
+# don't add graphql files
+schema.graphql
+src/**/gql/**
