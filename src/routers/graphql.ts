@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { defineResolver, defineType, yoko } from "../utils/lib/graphql/index.js";
-import { writeFileSync } from "fs";
+import { defineResolver, defineType, yoko } from "@scinorandex/yoko";
+import { saveGraphQLSchema } from "../utils/saveGraphQLSchema";
 
 export const Hobby = z.object({
   id: z.string(),
@@ -103,10 +103,11 @@ const mutations = {
   }),
 };
 
-export const { schema, rootValue } = yoko({
+export const { schema, rootValue, schemaString } = yoko({
   types: { User: UserType, Hobby: HobbyType },
   queries,
   mutations,
 });
 
-writeFileSync("./schema.graphql", schema);
+// print the schema so graphql-codegen can see it
+saveGraphQLSchema({ namespace: "users", schema: schemaString });

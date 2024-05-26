@@ -2,16 +2,16 @@ import { Connection, ERPCError, wsValidate } from "@scinorandex/erpc";
 import { createWebSocketEndpoint, getRootRouter } from "@scinorandex/rpscin";
 import { z } from "zod";
 import { baseProcedure } from "../utils/auth.js";
-import { buildSchema, graphql } from "graphql";
+import { graphql } from "graphql";
 import { rootValue, schema } from "./graphql.js";
-
-const builtSchema = buildSchema(schema);
 
 type Endpoint = {
   Receives: {};
   Emits: { ping: { date: number }; newLogin: { username: string } };
 };
 const connections: Set<Connection<Endpoint>> = new Set();
+
+const GraphqlRequestValidator = z.object({ query: z.string(), variables: z.object({}).passthrough() });
 
 export const unTypeSafeRouter = getRootRouter({
   "/status": {
@@ -53,13 +53,9 @@ export const unTypeSafeRouter = getRootRouter({
   },
 
   "/graphql": {
-    post: baseProcedure.use(async (req, res) => {
-      const result = await graphql({
-        schema: builtSchema,
-        rootValue,
-        source: req.body.query,
-        variableValues: req.body.variables,
-      });
+    post: baseProcedure.input(GraphqlRequestValidator).use(async (req, res, { input }) => {
+      const { query: source, variables: variableValues } = input;
+      const result = await graphql({ schema, rootValue, source, variableValues });
 
       if (result.data) return result.data as any;
 
