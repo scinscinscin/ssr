@@ -1,4 +1,4 @@
-import { PublicLayout } from "../layouts/public";
+import { PublicLayout } from "../layouts/public.client";
 import { client } from "../utils/apiClient";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
