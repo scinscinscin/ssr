@@ -1,10 +1,10 @@
-import { PublicLayout } from "../layouts/public.client";
+import { PublicLayoutFrontend } from "../layouts/public.client";
+import { PublicLayoutBackend } from "../layouts/public.server";
 import { client } from "../utils/apiClient";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-const Page = PublicLayout.createPage<{}>({
-  page() {
+export default PublicLayoutFrontend.use<{}>(() => {
     const LoginForm = useForm<{ username: string; password: string }>();
 
     return {
@@ -32,8 +32,6 @@ const Page = PublicLayout.createPage<{}>({
         </div>
       ),
     };
-  },
 });
 
-export default Page.defaultExport;
-export const getServerSideProps = Page.getServerSideProps;
+export const getServerSideProps = PublicLayoutBackend.use<{}>(() => {});
