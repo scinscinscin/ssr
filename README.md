@@ -6,6 +6,10 @@ A template for creating projects using scinstack
  - Easy + typesafe layouts using Next.js pages router using [`@scinorandex/layout`](https://github.com/scinscinscin/layout)
  - End to end API typesafety using [`@scinorandex/rpscin`](https://github.com/scinscinscin/rpscin)
  - GraphQL capabilities using [`@scinorandex/yoko`](https://github.com/scinscinscin/yoko)
+ - Provides better types for Next.js functions (makes `params` non optional for gSP / gSSP contexts, makes `getStaticPaths` return type concrete)
+ - Supports component level server-side data fetching using a [`useSSE`](https://github.com/kmoskwiak/useSSE) fork
+
+### Pre-setup libraries
  - Has Font Awesome configured using [`react-fortawesome`](https://fortawesome.com/)
  - Comes with [`react-toastify`](https://www.npmjs.com/package/react-toastify), [`next-seo`](https://www.npmjs.com/package/next-seo), [`react-hook-form`](https://www.npmjs.com/package/react-hook-form) preinstalled
  - Uses SCSS modules using [`sass`](https://www.npmjs.com/package/sass)

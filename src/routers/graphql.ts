@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { defineResolver, defineType, yoko } from "@scinorandex/yoko";
-import { saveGraphQLSchema } from "../utils/saveGraphQLSchema.js";
+import { saveGraphQLSchema } from "../utils/lib/saveGraphQLSchema.js";
 
 export const Hobby = z.object({
   id: z.string(),

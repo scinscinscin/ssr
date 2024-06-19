@@ -6,6 +6,7 @@ export interface PublicLayoutOptions extends GenerateLayoutOptionsImpl {
   ClientSideLayoutProps: { seo?: NextSeoProps };
   // the layout needs the username of the currently logged in user
   ServerSideLayoutProps: { username: string | null };
+  Transform: { "sse.cache": any };
 }
 
 export const PublicLayoutFrontend = implementLayoutFrontend<PublicLayoutOptions>({

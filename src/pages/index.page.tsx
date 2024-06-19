@@ -5,11 +5,23 @@ import { useEffect, useState } from "react";
 import { client, fetchGQL } from "../utils/apiClient";
 import { useForm } from "react-hook-form";
 import { getUsersWithHobbies } from "../graphql/users/documents/getUsersWithHobbies";
+import { useSSE } from "../utils/lib/useSSE";
 
-interface PageProps {}
+interface PageProps {
+  field: string;
+}
 
 export default PublicLayoutFrontend.use<PageProps>((args) => {
   const [names, setNames] = useState([] as string[]);
+
+  const FilesLoader = useSSE(async () => {
+    if (typeof window === "undefined") {
+      const fs = await import("fs/promises");
+      return await fs.readdir(process.cwd());
+    }
+  }, "files");
+
+  console.log(FilesLoader);
 
   useEffect(() => {
     /**
@@ -76,4 +88,8 @@ export default PublicLayoutFrontend.use<PageProps>((args) => {
   };
 });
 
-export const getServerSideProps = PublicLayoutBackend.use<PageProps>({});
+export const getServerSideProps = PublicLayoutBackend.use<PageProps>({
+  async getServerSideProps(ctx) {
+    return { props: { field: "hehe" } };
+  },
+});

@@ -7,9 +7,10 @@ export const PublicLayoutBackend = implementLayoutBackend<PublicLayoutOptions>({
    */
   async getServerSideProps(ctx) {
     const username = ctx.res.locals.user?.username ?? null;
+    return { props: { layout: { username } } };
+  },
 
-    return {
-      props: { layout: { username } },
-    };
+  async executeTransform(context, pageProps) {
+    return { "sse.cache": await context.res.locals.generateSse(context, pageProps) };
   },
 });
