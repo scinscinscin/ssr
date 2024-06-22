@@ -28,8 +28,9 @@ const _App: AppType = ({ Component, pageProps }: AppProps) => {
 };
 
 _App.getInitialProps = async (appContext: AppContext) => {
-  appContext.ctx.res.locals.generateSse = async (gsspContext, pageProps) =>
-    await initialRender({ appContext, gsspContext, props: { pageProps } });
+  appContext.ctx.res.locals.generateSse = async (gsspContext, pageProps) => {
+    return await initialRender({ appContext, gsspContext, props: { pageProps } });
+  };
 
   /**
    * What you return here doesn't matter for regular pages

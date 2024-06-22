@@ -29,12 +29,21 @@ export type Params<Route extends string> = string extends Route ? {}
   ? ProcessRequiredParam<Param> & Params<`${Prefix}${Suffix}`>
   : {};
 
+type _GetServerSidePropsContext<
+  Q extends ParsedUrlQuery = ParsedUrlQuery,
+  D extends PreviewData = PreviewData
+> = OriginalGetServerSidePropsContext<Q, D> & {
+  params: Q;
+  req: Request;
+  res: Response<any, MyLocals>;
+};
+
 /**
  * Sets the type of res.locals, which can be accessed using ctx.res.locals
  */
 interface MyLocals {
   user: User | null;
-  generateSse: (context: GetServerSidePropsContext, pageProps: any) => Promise<any>;
+  generateSse: (context: _GetServerSidePropsContext, pageProps: any) => Promise<any>;
 }
 
 declare module "next" {
@@ -45,11 +54,7 @@ declare module "next" {
   export type GetServerSidePropsContext<
     Q extends ParsedUrlQuery = ParsedUrlQuery,
     D extends PreviewData = PreviewData
-  > = OriginalGetServerSidePropsContext<Q, D> & {
-    params: Q;
-    req: Request;
-    res: Response<any, MyLocals>;
-  };
+  > = _GetServerSidePropsContext<Q, D>;
 
   export type GetServerSideProps<
     P extends { [key: string]: any } = { [key: string]: any },
