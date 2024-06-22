@@ -34,7 +34,7 @@ export type Params<Route extends string> = string extends Route ? {}
  */
 interface MyLocals {
   user: User | null;
-  generateSse: (context: GetStaticPropsContext, pageProps: any) => Promise<any>;
+  generateSse: (context: GetServerSidePropsContext, pageProps: any) => Promise<any>;
 }
 
 declare module "next" {
