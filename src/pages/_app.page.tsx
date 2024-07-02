@@ -32,10 +32,7 @@ _App.getInitialProps = async (appContext: AppContext) => {
     return await initialRender({ appContext, gsspContext, props: { pageProps } });
   };
 
-  /**
-   * What you return here doesn't matter for regular pages
-   * but is required for 404 and 500 pages to work
-   */
+  /** What you return here doesn't matter for regular pages but is required for 404 and 500 pages to work */
   return App.getInitialProps(appContext);
 };
 

@@ -1,7 +1,11 @@
 import Cookies from "js-cookie";
 import { Client } from "@scinorandex/rpscin/dist/client";
 import { Browser } from "@scinorandex/rpscin/dist/envs/browser";
+
+/** Use the ExportedApi import instead when working on only frontend to get faster typescript performance */
 import type { AppRouter } from "../server";
+// import type { ExportedApi as AppRouter } from "../exportedApi";
+
 import { TypedDocumentNode, ResultOf, VariablesOf } from "@graphql-typed-document-node/core";
 import { print } from "graphql";
 
