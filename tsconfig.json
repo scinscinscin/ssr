@@ -17,5 +17,5 @@
     "noEmit": false
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "./codegen.ts"]
+  "exclude": ["node_modules", "./codegen.ts", "./transformer.ts"]
 }
